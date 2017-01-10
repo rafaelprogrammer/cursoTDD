@@ -2,14 +2,15 @@ package br.com.pilha;
 
 public class Pilha {
 	
-	private Object elemento;
+	private Object[] elementos;
 	private int quantidade;
 
-	public Pilha() {
+	public Pilha(int maximo) {
+		elementos = new Object[maximo];
 	}
 
 	public boolean estaVazia() {
-		return elemento == null;
+		return quantidade == 0;
 	}
 
 	public int tamanho() {
@@ -17,12 +18,24 @@ public class Pilha {
 	}
 
 	public void empilha(Object elemento) {
-		this.elemento = elemento;
+		if(quantidade == elementos.length){
+			throw new PilhaCheiaException("Não é possível empilhar mais elementos");
+		}
+		this.elementos[quantidade] = elemento;
 		quantidade++;
 	}
 
 	public Object topo() {
-		return elemento;
+		return elementos[quantidade-1];
+	}
+
+	public Object desempilha() {
+		if(estaVazia()){
+			throw new PilhaVaziaException("Não é possível desempilhar");
+		}
+		Object topo = topo();
+		quantidade --;
+		return topo;
 	}
 
 }
