@@ -2,9 +2,61 @@ RELATÓRIO PROCESSO TDD PROJETO CAMEL CASE
 
 1º Ciclo
 
-VERMELHO
+VERMELHO (Adicionando um teste falhando)
 
+##Classe de teste TestCamelCase. Falhando conforme a primeira fase do TDD - Criar um teste que falha
+##Criado o testConverterNomeSimples que será informando um valor simples como exemplo "rafael" e irá retornar um único valor.
 
-VERDE 
+package br.com.caracteres.CamelCase;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class TestConverterCamelCase {
+	
+	@Test
+	public void testConverterNomeSimples(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(1,camelCase.converterCamelCase("Rafael").size());
+		assertEquals("rafael",camelCase.converterCamelCase("Rafael").get(0));
+	}
+
+}
+
+##Classe utilitaria que consta o metodo converterCamelCase
+
+package br.com.caracteres.CamelCase;
+
+import java.util.List;
+
+public class CamelCaseUtil {
+
+	public List<String> converterCamelCase(String original) {
+		
+		return null;
+	}
+
+}
+
+VERDE (Teste Passando)
+
+##A classe CamelCaseUtil foi alterada, de forma simples, para fazer o teste testConverterNomeSimples passar.
+##O conteúdo original foi alterado para tudo em minusculo e depois adicionado na lista para antender o primeiro requisito.
+
+package br.com.caracteres.CamelCase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CamelCaseUtil {
+
+	public List<String> converterCamelCase(String original) {
+		List<String> list = new ArrayList<String>();
+		list.add(original.toLowerCase());
+		return list;
+	}
+
+}
 
 AZUL
