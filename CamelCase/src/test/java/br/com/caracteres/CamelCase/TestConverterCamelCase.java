@@ -12,5 +12,4 @@ public class TestConverterCamelCase {
 		assertEquals(1,camelCase.converterCamelCase("Rafael").size());
 		assertEquals("rafael",camelCase.converterCamelCase("Rafael").get(0));
 	}
-
 }

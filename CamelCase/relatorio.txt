@@ -59,4 +59,26 @@ public class CamelCaseUtil {
 
 }
 
-AZUL
+AZUL (Refatoração)
+
+##Criado o método criarLista para uma melhor compreenção do código e deixao mais limpo
+
+package br.com.caracteres.CamelCase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CamelCaseUtil {
+
+	public List<String> converterCamelCase(String original) {
+		List<String> list = criarLista(original);
+		return list;
+	}
+
+	private List<String> criarLista(String original) {
+		List<String> list = new ArrayList<String>();
+		list.add(original.toLowerCase());
+		return list;
+	}
+	
+}
