@@ -5,6 +5,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import br.com.caracteres.exceptions.CaracteresEspeciaisException;
+import br.com.caracteres.exceptions.IniciandoComNumerosException;
+import br.com.caracteres.util.CamelCaseUtil;
+
 public class TestConverterCamelCase {
 	
 	@Test
@@ -26,5 +30,17 @@ public class TestConverterCamelCase {
 		CamelCaseUtil camelCase = new CamelCaseUtil();
 		assertEquals(3,camelCase.converterCamelCase("Rafael11Alves").size());
 		assertArrayEquals(new Object[]{"rafael","11","alves"}, camelCase.converterCamelCase("Rafael11Alves").toArray());
+	}
+	
+	@Test(expected=CaracteresEspeciaisException.class)
+	public void testConverterCadeiaCaracteresComCaracteresEspeciais(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		camelCase.converterCamelCase("Rafael#Alves");		
+	}
+	
+	@Test(expected=IniciandoComNumerosException.class)
+	public void testConverterCadeiaCaracteresIniciandoComNumeros(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		camelCase.converterCamelCase("20RafaelAlves");		
 	}
 }

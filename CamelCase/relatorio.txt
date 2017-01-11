@@ -126,3 +126,131 @@ public class CamelCaseUtil {
 AZUL (Refatoração)
 
 ##NÃO FOI NECESSÁRIO REFATORAR, de acordo com a regra do limite de 10 linhas ou somente iniciar quando a redundância ocorre pela terceira fez (Regra de Três).
+
+###################
+3º Ciclo
+
+VERMELHO (Adicionando um teste falhando)
+
+##Adicionando os testes testConverterCadeiaCaracteresComCaracteresEspeciais e testConverterCadeiaCaracteresIniciandoComNumeros, esperando que tenha as seguintes exceções: CaracteresEspeciaisException e IniciandoComNumerosException
+
+public class TestConverterCamelCase {
+	
+	@Test
+	public void testConverterNomeSimples(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(1,camelCase.converterCamelCase("Rafael").size());
+		assertEquals("rafael",camelCase.converterCamelCase("Rafael").get(0));
+	}
+	
+	@Test
+	public void testConverterNomeComposto(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(2,camelCase.converterCamelCase("RafaelAlves").size());
+		assertArrayEquals(new Object[]{"rafael","alves"}, camelCase.converterCamelCase("RafaelAlves").toArray());
+	}
+	
+	@Test
+	public void testConverterCadeiaCaracteresComNumeros(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(3,camelCase.converterCamelCase("Rafael11Alves").size());
+		assertArrayEquals(new Object[]{"rafael","11","alves"}, camelCase.converterCamelCase("Rafael11Alves").toArray());
+	}
+	
+	@Test(expected=CaracteresEspeciaisException.class)
+	public void testConverterCadeiaCaracteresComCaracteresEspeciais(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		camelCase.converterCamelCase("Rafael#Alves");		
+	}
+	
+	@Test(expected=IniciandoComNumerosException.class)
+	public void testConverterCadeiaCaracteresIniciandoComNumeros(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		camelCase.converterCamelCase("11RafaelAlves");		
+	}
+}
+
+
+VERDE (Teste passando)
+
+##Alteração do metodo converter para verificar se o valor original possui caracteres especiais lançando um exceção (CaracteresEspeciaisException) e também 
+##verificando se o valor inicia com número lançando uma exceção (IniciandoComNumerosException)
+
+public class CamelCaseUtil {
+
+	public List<String> converterCamelCase(String original) {
+		List<String> list = criarLista(original);
+		return list;
+	}
+
+	private List<String> criarLista(String original) {
+		List<String> list = new ArrayList<String>();
+		list.addAll(Arrays.asList(converter(original)));
+		return list;
+	}
+
+	private String[] converter(String original) {
+		Pattern patternLetrasENumeros = Pattern.compile("[^A-Za-z0-9]+");
+		if(patternLetrasENumeros.matcher(original).find()){
+			throw new CaracteresEspeciaisException("Caracteres especiais não são permitidos, somente letras e números");
+		}
+		
+		if(Character.isDigit(original.charAt(0))){
+			throw new IniciandoComNumerosException("Não deve começar com números");
+		}
+		
+		String[] arrayOriginal = original.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+				"(?<=[A-Za-z])(?=[^A-Za-z])"), " ").split(" ");
+		for(int i=0;i<arrayOriginal.length;i++){
+			arrayOriginal[i] = arrayOriginal[i].substring(0, 1).toLowerCase()+arrayOriginal[i].substring(1);
+		}
+		return arrayOriginal;
+	}
+
+}
+
+
+AZUL (Refatoração)
+
+##Refatoração realizada pois o método converter ultrapassou o limite de 10 linhas. 
+##Criado os métodos: validarCaracteresEspeciais e validarInicioComNumeros
+
+
+public class CamelCaseUtil {
+
+	public List<String> converterCamelCase(String original) {
+		List<String> list = criarLista(original);
+		return list;
+	}
+
+	private List<String> criarLista(String original) {
+		List<String> list = new ArrayList<String>();
+		list.addAll(Arrays.asList(converter(original)));
+		return list;
+	}
+
+	private String[] converter(String original) {
+		validarCaracteresEspeciais(original);
+		validarInicioComNumeros(original);
+		String[] arrayOriginal = original.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+				"(?<=[A-Za-z])(?=[^A-Za-z])"), " ").split(" ");
+		for(int i=0;i<arrayOriginal.length;i++){
+			arrayOriginal[i] = arrayOriginal[i].substring(0, 1).toLowerCase()+arrayOriginal[i].substring(1);
+		}
+		return arrayOriginal;
+	}
+
+	private void validarInicioComNumeros(String original) {
+		if(Character.isDigit(original.charAt(0))){
+			throw new IniciandoComNumerosException("Não deve começar com números");
+		}
+	}
+
+	private void validarCaracteresEspeciais(String original) {
+		Pattern patternLetrasENumeros = Pattern.compile("[^A-Za-z0-9]+");
+		if(patternLetrasENumeros.matcher(original).find()){
+			throw new CaracteresEspeciaisException("Caracteres especiais não são permitidos, somente letras e números");
+		}
+	}
+
+}
