@@ -20,4 +20,11 @@ public class TestConverterCamelCase {
 		assertEquals(2,camelCase.converterCamelCase("RafaelAlves").size());
 		assertArrayEquals(new Object[]{"rafael","alves"}, camelCase.converterCamelCase("RafaelAlves").toArray());
 	}
+	
+	@Test
+	public void testConverterCadeiaCaracteresComNumeros(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(3,camelCase.converterCamelCase("Rafael11Alves").size());
+		assertArrayEquals(new Object[]{"rafael","11","alves"}, camelCase.converterCamelCase("Rafael11Alves").toArray());
+	}
 }

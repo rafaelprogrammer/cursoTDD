@@ -68,7 +68,7 @@ public class CamelCaseUtil {
 
 VERMELHO (Adicionando um teste falhando)
 
-##Adicionando o teste testConverterNomeComposto falhando com duas assertivas um para o tamanho e outra para o resultado esperado.
+##Adicionando os testes testConverterNomeComposto e testConverterCadeiaCaracteresComNumeros, falhando com duas assertivas um para o tamanho e outra para o resultado esperado.
 
 public class TestConverterCamelCase {
 	
@@ -85,11 +85,18 @@ public class TestConverterCamelCase {
 		assertEquals(2,camelCase.converterCamelCase("RafaelAlves").size());
 		assertArrayEquals(new Object[]{"rafael","alves"}, camelCase.converterCamelCase("RafaelAlves").toArray());
 	}
+	
+	@Test
+	public void testConverterCadeiaCaracteresComNumeros(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(3,camelCase.converterCamelCase("Rafael11Alves").size());
+		assertArrayEquals(new Object[]{"rafael","11","alves"}, camelCase.converterCamelCase("Rafael11Alves").toArray());
+	}
 }
 
 VERDE (Teste passando)
 
-##Alteração realizada para fazer o teste  testConverterNomeComposto passar mantendo o teste testConverterNomeSimples
+##Alteração realizada para fazer os testes  testConverterNomeComposto e testConverterCadeiaCaracteresComNumeros passarem mantendo o teste testConverterNomeSimples
 ##Criado o método converter para tratar a String utilizando um regex que verifica 3 tipos de condicoes para separar as cadeias de caracteres retornando um array que será convertido em uma lista.
 
 public class CamelCaseUtil {
@@ -115,7 +122,6 @@ public class CamelCaseUtil {
 	}
 
 }
-
 
 AZUL (Refatoração)
 
