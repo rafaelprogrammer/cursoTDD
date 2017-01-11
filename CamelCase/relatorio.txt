@@ -7,12 +7,6 @@ VERMELHO (Adicionando um teste falhando)
 ##Classe de teste TestCamelCase. Falhando conforme a primeira fase do TDD - Criar um teste que falha
 ##Criado o testConverterNomeSimples que será informando um valor simples como exemplo "rafael" e irá retornar um único valor.
 
-package br.com.caracteres.CamelCase;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 public class TestConverterCamelCase {
 	
 	@Test
@@ -25,10 +19,6 @@ public class TestConverterCamelCase {
 }
 
 ##Classe utilitaria que consta o metodo converterCamelCase
-
-package br.com.caracteres.CamelCase;
-
-import java.util.List;
 
 public class CamelCaseUtil {
 
@@ -44,11 +34,6 @@ VERDE (Teste Passando)
 ##A classe CamelCaseUtil foi alterada, de forma simples, para fazer o teste testConverterNomeSimples passar.
 ##O conteúdo original foi alterado para tudo em minusculo e depois adicionado na lista para antender o primeiro requisito.
 
-package br.com.caracteres.CamelCase;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class CamelCaseUtil {
 
 	public List<String> converterCamelCase(String original) {
@@ -62,11 +47,6 @@ public class CamelCaseUtil {
 AZUL (Refatoração)
 
 ##Criado o método criarLista para uma melhor compreenção do código e deixao mais limpo
-
-package br.com.caracteres.CamelCase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CamelCaseUtil {
 
@@ -82,3 +62,61 @@ public class CamelCaseUtil {
 	}
 	
 }
+
+###################
+2º Ciclo
+
+VERMELHO (Adicionando um teste falhando)
+
+##Adicionando o teste testConverterNomeComposto falhando com duas assertivas um para o tamanho e outra para o resultado esperado.
+
+public class TestConverterCamelCase {
+	
+	@Test
+	public void testConverterNomeSimples(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(1,camelCase.converterCamelCase("Rafael").size());
+		assertEquals("rafael",camelCase.converterCamelCase("Rafael").get(0));
+	}
+	
+	@Test
+	public void testConverterNomeComposto(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		assertEquals(2,camelCase.converterCamelCase("RafaelAlves").size());
+		assertArrayEquals(new Object[]{"rafael","alves"}, camelCase.converterCamelCase("RafaelAlves").toArray());
+	}
+}
+
+VERDE (Teste passando)
+
+##Alteração realizada para fazer o teste  testConverterNomeComposto passar mantendo o teste testConverterNomeSimples
+##Criado o método converter para tratar a String utilizando um regex que verifica 3 tipos de condicoes para separar as cadeias de caracteres retornando um array que será convertido em uma lista.
+
+public class CamelCaseUtil {
+
+	public List<String> converterCamelCase(String original) {
+		List<String> list = criarLista(original);
+		return list;
+	}
+
+	private List<String> criarLista(String original) {
+		List<String> list = new ArrayList<String>();
+		list.addAll(Arrays.asList(converter(original)));
+		return list;
+	}
+
+	private String[] converter(String original) {
+		String[] arrayOriginal = original.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+				"(?<=[A-Za-z])(?=[^A-Za-z])"), " ").split(" ");
+		for(int i=0;i<arrayOriginal.length;i++){
+			arrayOriginal[i] = arrayOriginal[i].substring(0, 1).toLowerCase()+arrayOriginal[i].substring(1);
+		}
+		return arrayOriginal;
+	}
+
+}
+
+
+AZUL (Refatoração)
+
+##NÃO FOI NECESSÁRIO REFATORAR, de acordo com a regra do limite de 10 linhas ou somente iniciar quando a redundância ocorre pela terceira fez (Regra de Três).
