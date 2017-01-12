@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import br.com.caracteres.exceptions.CadeiaCaracteresObrigatorioException;
+import br.com.caracteres.exceptions.CadeiaCaracteresQuantidadeMaximaException;
 import br.com.caracteres.exceptions.CaracteresEspeciaisException;
 import br.com.caracteres.exceptions.IniciandoComNumerosException;
 
 public class CamelCaseUtil {
 
+	private Integer quanidadeMaximaCaracteres = 50;
+	
 	public List<String> converterCamelCase(String original) {
 		List<String> list = criarLista(original);
 		return list;
@@ -24,6 +27,7 @@ public class CamelCaseUtil {
 
 	private String[] converter(String original) {
 		validarCampoObrigatorio(original);
+		validarQuantidadeMaxima(original);
 		validarCaracteresEspeciais(original);
 		validarInicioComNumeros(original);
 		String[] arrayOriginal = original.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
@@ -32,6 +36,12 @@ public class CamelCaseUtil {
 			arrayOriginal[i] = arrayOriginal[i].substring(0, 1).toLowerCase()+arrayOriginal[i].substring(1);
 		}
 		return arrayOriginal;
+	}
+
+	private void validarQuantidadeMaxima(String original) {
+		if(original.length() > quanidadeMaximaCaracteres){
+			throw new CadeiaCaracteresQuantidadeMaximaException("A quantidade máxima de carateres é "+quanidadeMaximaCaracteres);
+		}
 	}
 	
 	private void validarCampoObrigatorio(String original) {

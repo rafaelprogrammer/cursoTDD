@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import br.com.caracteres.exceptions.CadeiaCaracteresObrigatorioException;
+import br.com.caracteres.exceptions.CadeiaCaracteresQuantidadeMaximaException;
 import br.com.caracteres.exceptions.CaracteresEspeciaisException;
 import br.com.caracteres.exceptions.IniciandoComNumerosException;
 import br.com.caracteres.util.CamelCaseUtil;
@@ -33,6 +34,18 @@ public class TestConverterCamelCase {
 		assertArrayEquals(new Object[]{"rafael","11","alves"}, camelCase.converterCamelCase("Rafael11Alves").toArray());
 	}
 	
+	@Test(expected=CaracteresEspeciaisException.class)
+	public void testConverterCadeiaCaracteresComCaracteresEspeciais(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		camelCase.converterCamelCase("Rafael#Alves");		
+	}
+	
+	@Test(expected=IniciandoComNumerosException.class)
+	public void testConverterCadeiaCaracteresIniciandoComNumeros(){
+		CamelCaseUtil camelCase = new CamelCaseUtil();
+		camelCase.converterCamelCase("20RafaelAlves");		
+	}
+	
 	@Test(expected=CadeiaCaracteresObrigatorioException.class)
 	public void testConverterCadeiaCaracteresNull(){
 		CamelCaseUtil camelCase = new CamelCaseUtil();
@@ -45,15 +58,9 @@ public class TestConverterCamelCase {
 		camelCase.converterCamelCase("");		
 	}
 	
-	@Test(expected=CaracteresEspeciaisException.class)
-	public void testConverterCadeiaCaracteresComCaracteresEspeciais(){
+	@Test(expected = CadeiaCaracteresQuantidadeMaximaException.class)
+	public void testConverterCadeiaCaracteresValorMaximo() {
 		CamelCaseUtil camelCase = new CamelCaseUtil();
-		camelCase.converterCamelCase("Rafael#Alves");		
-	}
-	
-	@Test(expected=IniciandoComNumerosException.class)
-	public void testConverterCadeiaCaracteresIniciandoComNumeros(){
-		CamelCaseUtil camelCase = new CamelCaseUtil();
-		camelCase.converterCamelCase("20RafaelAlves");		
+		camelCase.converterCamelCase("JavaUmaLinguagemDeProgramaçãoInterpretadaOrientadaAObjetosDesenvolvidaNaDécada.");
 	}
 }
