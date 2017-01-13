@@ -37,5 +37,33 @@ public class TesteTradutor {
 		assertEquals("bad",t.traduzir("mal"));
 	}
 	
+	@Test
+	public void duasTraducoesMesmaPalavra() {
+		t = new Tradutor();
+		t.adicionaTraducao("bom","good");
+		t.adicionaTraducao("bom","nice");
+		assertEquals("good, nice",t.traduzir("bom"));
+	}
+	
+	@Test
+	public void traduzirFrase() {
+		t = new Tradutor();
+		t.adicionaTraducao("guerra","war");
+		t.adicionaTraducao("é","is");
+		t.adicionaTraducao("ruim","bad");
+		assertEquals("war is bad",t.traduzirFrase("guerra é ruim"));
+	}
+	
+	@Test
+	public void traduzirFraseComDuasTraducoesMesmaPalavra() {
+		t = new Tradutor();
+		t.adicionaTraducao("paz","peace");
+		t.adicionaTraducao("é","is");
+		t.adicionaTraducao("ruim","bad");
+		t.adicionaTraducao("bom","good");
+		t.adicionaTraducao("bom","nice");
+		assertEquals("peace is good",t.traduzirFrase("paz é bom"));
+	}
+	
 
 }

@@ -12,11 +12,32 @@ public class Tradutor {
 	}
 
 	public void adicionaTraducao(String palavra, String traducao) {
+		if(traducoes.containsKey(palavra)){
+			traducao = traduzir(palavra) + ", " + traducao;
+		}
 		this.traducoes.put(palavra,traducao);
 	}
 
 	public String traduzir(String palavra) {
 		return traducoes.get(palavra);
+	}
+
+	public Object traduzirFrase(String frase) {
+		String[] palavras = frase.split(" ");
+		String fraseTraduzida = "";
+		for(String palavra: palavras){
+			String traducao = primeiraTraducao(palavra);
+			fraseTraduzida += " "+traducao;
+		}
+		return fraseTraduzida.trim();
+	}
+
+	private String primeiraTraducao(String palavra) {
+		String traducao = traduzir(palavra);
+		if(traducao.contains(",")){
+			traducao = traducao.substring(0, traducao.indexOf(","));
+		}
+		return traducao;
 	}
 
 }
