@@ -23,3 +23,15 @@ Farejar em busca de mau cheiros
 5 - Ifs aninhados
           - Replace Nested Conditional with Guard Clauses (3 Ciclos para fazer)
 
+
+registraUsuario: 
+
+
+1 - Expressões booleanas negativas
+	- Tornar as expressões boleadas positivas, uma de cada vez (3 Ciclos)
+
+2 - Ifs aninhados
+          - Replace Nested Conditional with Guard Clauses (3 Ciclos)
+	
+	
+	
