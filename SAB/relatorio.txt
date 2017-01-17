@@ -28,7 +28,7 @@ registraUsuario:
 
 Acredito que tenha um Null Object 
 
-1 - Expressões booleanas negativas
+1 - Expressões booleanas negativas - Complicated Boolean Expressions 
 	- Tornar as expressões boleadas positivas, uma de cada vez (3 Ciclos)
 
 2 - Ifs aninhados
