@@ -1,0 +1,25 @@
+Lista de Maus Cheiros
+
+1 - Identifico Tipo de Mau Cheiro
+2 - Escolha técnica de refatoração
+3 - Aplico Técnica de refatoração!
+	- mais de 1 passo interno (sempre testando)
+4 - Testar
+
+
+Farejar em busca de mau cheiros
+
+1 - Nome Inapropriados
+	- Rename variables
+	- Uso do prefixo “_” underline ou sublinhado, para indicar variável de instância.
+2 - Expressões booleanas negativas
+	- Tornar as expressões boleadas positivas, uma de cada vez
+	
+3 - Comentários
+           - Retirar comentários
+4 - Código duplicado
+          - Replace Temp with Return value
+          - Remover código inútil ou morto
+5 - Ifs aninhados
+          - Replace Nested Conditional with Guard Clauses (3 Ciclos para fazer)
+
