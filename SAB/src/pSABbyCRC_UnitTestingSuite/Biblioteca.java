@@ -24,21 +24,15 @@ public class Biblioteca {
 
 	public void registraUsuario(String nome)
 			throws UsuarioJaRegistradoException, UsuarioComNomeVazioException, UsuarioInexistenteException {
-		if (nome == null) {
+		if (nome == null)
 			throw new UsuarioInexistenteException("--->Não pode registrar usuario inexistente!");
-		}else{
-			if (nome.isEmpty()) {
-				throw new UsuarioComNomeVazioException("--->Não pode registrar usuario com nome vazio!");
-			}else{
-				Usuario usuario = new Usuario(nome);
-				if (_usuarios.contains(usuario)) {
-					throw new UsuarioJaRegistradoException(
-							"--->Já existe usuário com o nome \"" + nome + "\"! Use outro nome!");
-				}else{
-					_usuarios.add(usuario);
-				}
-			}
-		}
+		if (nome.isEmpty()) 
+			throw new UsuarioComNomeVazioException("--->Não pode registrar usuario com nome vazio!");
+		Usuario usuario = new Usuario(nome);
+		if (_usuarios.contains(usuario)) 
+				throw new UsuarioJaRegistradoException(
+						"--->Já existe usuário com o nome \"" + nome + "\"! Use outro nome!");
+		_usuarios.add(usuario);
 	}
 
 	public void emprestaLivro(Livro livro, Usuario usuario)
