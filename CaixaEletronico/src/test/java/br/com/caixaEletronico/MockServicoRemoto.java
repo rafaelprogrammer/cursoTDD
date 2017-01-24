@@ -10,9 +10,8 @@ public class MockServicoRemoto implements ServicoRemoto {
 	private Double saldoAnterior;
 
 	@Override
-	public  ContaCorrente recuperarConta(String numeroDaConta) {
+	public  void recuperarConta(String numeroDaConta) {
 		contaCorrente = new ContaCorrente(numeroDaConta);
-		return contaCorrente;
 	}
 
 	@Override
@@ -45,6 +44,10 @@ public class MockServicoRemoto implements ServicoRemoto {
 
 	public void setValorDeposito(Double valorDeposito) {
 		this.valorDeposito = valorDeposito;
+	}
+
+	public ContaCorrente getContaCorrente() {
+		return contaCorrente;
 	}
 
 }

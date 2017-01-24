@@ -24,7 +24,7 @@ public class MockHardware implements Hardware {
 		entregaEnvelope = true;
 	}
 
-	public void verificarNumeroContaCartao(String numeroContaCartaoEsperado) {
+	public void verificarRecuperacaoConta(String numeroContaCartaoEsperado) {
 		assertEquals(numeroContaCartaoEsperado, numeroContaCartaoRecuperado);
 	}
 	
