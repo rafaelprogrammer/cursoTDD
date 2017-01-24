@@ -6,6 +6,8 @@ import java.util.Locale;
 public class CaixaEletronico {
 	
 	private ContaCorrente contaCorrente;
+	private Double valorDeposito;
+	private Double valorSaque;
 
 	public String logar() {
 		return contaCorrente != null && contaCorrente.getNumeroDaConta() != null ? "Usuário Autenticado"
@@ -20,7 +22,25 @@ public class CaixaEletronico {
 		return "O saldo é "+NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(contaCorrente.getSaldo());
 	}
 
-	public String sacar(Integer valor) {
-		return contaCorrente.getSaldo() > valor ? "Retire seu dinheiro":"Saldo insuficiente";
+	public String sacar(Double valorSaque) {
+		this.valorSaque = valorSaque;
+		return contaCorrente.getSaldo() > valorSaque ? "Retire seu dinheiro":"Saldo insuficiente";
+	}
+
+	public String depositar(Double valorDeposito) {
+		this.valorDeposito = valorDeposito;
+		return "Depósito recebido com sucesso";
+	}
+
+	public Double getValorDeposito() {
+		return valorDeposito;
+	}
+
+	public void setValorDeposito(Double valorDeposito) {
+		this.valorDeposito = valorDeposito;
+	}
+
+	public Double getValorSaque() {
+		return valorSaque;
 	}
 }

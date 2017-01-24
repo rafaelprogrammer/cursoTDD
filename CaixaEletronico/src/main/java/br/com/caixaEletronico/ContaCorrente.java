@@ -3,7 +3,7 @@ package br.com.caixaEletronico;
 public class ContaCorrente  {
 
 	private String numeroDaConta;
-	private Integer saldo = 5;
+	private Double saldo = 5.00;
 	
 	public ContaCorrente(String numeroDaConta) {
 		super();
@@ -18,11 +18,11 @@ public class ContaCorrente  {
 		this.numeroDaConta = numeroDaConta;
 	}
 
-	public Integer getSaldo() {
+	public Double getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(Integer saldo) {
+	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}
 }
