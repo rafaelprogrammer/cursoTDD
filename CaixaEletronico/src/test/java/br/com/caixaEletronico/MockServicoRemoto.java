@@ -16,12 +16,19 @@ public class MockServicoRemoto implements ServicoRemoto {
 
 	@Override
 	public void persistirConta() {
+		verificarPermissaoParaOperacao();
 		this.saldoAnterior = contaCorrente.getSaldo();
 		if(valorSaque !=null){
 			contaCorrente.setSaldo(contaCorrente.getSaldo()-valorSaque);
 		}
 		if(valorDeposito !=null){
 			contaCorrente.setSaldo(contaCorrente.getSaldo()+valorDeposito);
+		}
+	}
+
+	private void verificarPermissaoParaOperacao() {
+		if(valorDeposito == null && valorSaque == null){
+			throw new OperacaoNaoAutorizadaException("Esta operação só é permitida para saque ou deposito!");
 		}
 	}
 	

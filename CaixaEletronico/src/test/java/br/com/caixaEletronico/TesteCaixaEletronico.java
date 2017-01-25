@@ -35,6 +35,13 @@ public class TesteCaixaEletronico {
 		assertEquals("O saldo é R$ 5,00",this.c.saldo());
 	}
 	
+	@Test(expected=OperacaoNaoAutorizadaException.class)
+	public void executarPersistirContaOperacaoNaoAutorizada(){
+		autenticarNoCaixaEletronico();
+		assertEquals("O saldo é R$ 5,00",this.c.saldo());
+		mockServicoRemoto.persistirConta();
+	}
+	
 	@Test
 	public void sacarComSucesso(){
 		autenticarNoCaixaEletronico();
