@@ -6,37 +6,38 @@ import org.junit.Test;
 
 public class TesteCaixaEletronico {
 	
-	private CaixaEletronico c;
-	private MockServicoRemoto mockServicoRemoto;
-	private MockHardware mockHardware;
+	private CaixaEletronico c = new CaixaEletronico();
+	private MockServicoRemoto mockServicoRemoto = new MockServicoRemoto();
+	private MockHardware mockHardware = new MockHardware();
 	
 	@Test
 	public void loginComSucesso(){
-		AutenticarNoCaixaEletronico();
+		c.setAcessoContaCorrente(true);
+		autenticarNoCaixaEletronico();
+		assertEquals("Usuário Autenticado",c.logar());
 	}
 	
-	/*@Test
-	public void loginComFalha(){
-		this.c = new CaixaEletronico();
-		this.c.setContaCorrente(null);
-		assertEquals("Não foi possível autenticar o usuário",c.logar());
-	}*/
-	
-	@Test(expected = FalhaFuncionamentoException.class)
-	public void recuperaNumeroDaContaCartaoComFalha(){
-		MockHardwareComFalha mock = new MockHardwareComFalha();
-		mock.pegarNumeroDaContaCartao();
+	@Test(expected=FalhaFuncionamentoException.class)
+	public void loginComFalhaNaRecuperacaoDoCartao(){
+		mockHardware.setFalhaPegarNumeroDaContaCartao(true);
+		autenticarNoCaixaEletronico();
 	}
 	
 	@Test
-	public void recuperaSaldoComSucesso(){
-		AutenticarNoCaixaEletronico();
+	public void loginComFalhaNaAutenticacao(){
+		c.setAcessoContaCorrente(false);
+		assertEquals("Não foi possível autenticar o usuário",c.logar());
+	}
+	
+	@Test
+	public void recuperarSaldoComSucesso(){
+		autenticarNoCaixaEletronico();
 		assertEquals("O saldo é R$ 5,00",this.c.saldo());
 	}
 	
 	@Test
 	public void sacarComSucesso(){
-		AutenticarNoCaixaEletronico();
+		autenticarNoCaixaEletronico();
 		assertEquals("Retire seu dinheiro",this.c.sacar(3.00));
 		mockServicoRemoto.setValorSaque(c.getValorSaque());
 		mockServicoRemoto.persistirConta();
@@ -46,8 +47,25 @@ public class TesteCaixaEletronico {
 	}
 	
 	@Test
+	public void sacarComSaldoInsuficiente(){
+		autenticarNoCaixaEletronico();
+		assertEquals("Saldo insuficiente",this.c.sacar(300.00));
+	}
+	
+	@Test(expected=FalhaFuncionamentoException.class)
+	public void sacarComFalhaNaEntregaDoDinheiro(){
+		autenticarNoCaixaEletronico();
+		assertEquals("Retire seu dinheiro",this.c.sacar(3.00));
+		mockServicoRemoto.setValorSaque(c.getValorSaque());
+		mockServicoRemoto.persistirConta();
+		mockServicoRemoto.verificarPersistirConta();
+		mockHardware.setFalhaEntregarDinheiro(true);
+		mockHardware.entregarDinheiro();
+	}
+	
+	@Test
 	public void depositarComSucesso(){
-		AutenticarNoCaixaEletronico();
+		autenticarNoCaixaEletronico();
 		assertEquals("Depósito recebido com sucesso",this.c.depositar(10.00));
 		mockHardware.lerEnvelope();
 		mockHardware.verificarLeituraEnvelope(true);
@@ -55,17 +73,20 @@ public class TesteCaixaEletronico {
 		mockServicoRemoto.persistirConta();
 		mockServicoRemoto.verificarPersistirConta();
 	}
+	
+	@Test(expected=FalhaFuncionamentoException.class)
+	public void depositarComFalhaAoLerEnvelope(){
+		autenticarNoCaixaEletronico();
+		assertEquals("Depósito recebido com sucesso",this.c.depositar(10.00));
+		mockHardware.setFalhaLerEnvelope(true);
+		mockHardware.lerEnvelope();
+	}
 
-	private void AutenticarNoCaixaEletronico() {
-		this.c = new CaixaEletronico();
-		mockHardware = new MockHardware();
-		this.mockServicoRemoto = new MockServicoRemoto();
+	private void autenticarNoCaixaEletronico() {
 		mockServicoRemoto.recuperarConta(mockHardware.pegarNumeroDaContaCartao());
 		mockHardware.verificarRecuperacaoConta("5669693398741223");
 		mockServicoRemoto.verificarRecuperaContaCorrente(new ContaCorrente("5669693398741223"));
-		c.setAcessoContaCorrente(true);
 		c.setValorSaldoAtual(mockServicoRemoto.getContaCorrente().getSaldo());
-		assertEquals("Usuário Autenticado",c.logar());
 	}
 
 }
