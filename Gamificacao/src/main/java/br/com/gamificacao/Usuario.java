@@ -4,9 +4,9 @@ public class Usuario {
 	
 	private String usuario;
 	private String tipo;
-	private int pontos;
+	private Integer pontos;
 	
-	public Usuario(String usuario, String tipo, int pontos) {
+	public Usuario(String usuario, String tipo, Integer pontos) {
 		super();
 		this.usuario = usuario;
 		this.tipo = tipo;
@@ -25,10 +25,10 @@ public class Usuario {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public int getPontos() {
+	public Integer getPontos() {
 		return pontos;
 	}
-	public void setPontos(int pontos) {
+	public void setPontos(Integer pontos) {
 		this.pontos = pontos;
 	}
 }
