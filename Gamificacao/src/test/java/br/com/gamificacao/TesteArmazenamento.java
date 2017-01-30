@@ -25,33 +25,22 @@ public class TesteArmazenamento {
 	@Test
 	public void retornarTodosUsuariosComPontos() {
 		Armazenamento armazenamento = new Armazenamento();
-		armazenamento.salvar("guerra", "estrela", 10);
+		armazenamento.salvar("estranho", "estrela", 10);
 		armazenamento.salvar("selva", "comentario", 5);
 		armazenamento.salvar("agoravai", "curtida", 0);
 		assertNotNull(armazenamento.recuperarTodosUsuariosComPontos());
-		assertEquals(2,armazenamento.recuperarTodosUsuariosComPontos().size());
-	}
-	
-	@Test
-	public void retornarNenhumUsuarioSemPontos() {
-		Armazenamento armazenamento = new Armazenamento();
-		armazenamento.salvar("guerra", "estrela", 0);
-		armazenamento.salvar("selva", "comentario", 0);
-		armazenamento.salvar("agoravai", "curtida", 0);
-		assertNotNull(armazenamento.recuperarTodosUsuariosComPontos());
-		assertEquals(0,armazenamento.recuperarTodosUsuariosComPontos().size());
 	}
 	
 	@Test
 	public void retornarTodosTiposDePontosRegistrados() {
 		Armazenamento armazenamento = new Armazenamento();
-		armazenamento.salvar("guerra", "estrela", 10);
-		armazenamento.salvar("guerra", "comentario", 5);
-		armazenamento.salvar("guerra", "curtida", 60);
-		assertNotNull(armazenamento.recuperarTodosTiposDePontosDoUsuario("guerra"));
-		assertEquals(3,armazenamento.recuperarTodosTiposDePontosDoUsuario("guerra").size());
+		armazenamento.salvar("cavaleiro", "estrela", 10);
+		armazenamento.salvar("cavaleiro", "comentario", 5);
+		armazenamento.salvar("cavaleiro", "curtida", 60);
+		assertNotNull(armazenamento.recuperarTodosTiposDePontosDoUsuario("cavaleiro"));
+		assertEquals(3,armazenamento.recuperarTodosTiposDePontosDoUsuario("cavaleiro").size());
 		assertArrayEquals(new Object[] { "estrela", "comentario", "curtida" },
-				armazenamento.recuperarTodosTiposDePontosDoUsuario("guerra").toArray());
+				armazenamento.recuperarTodosTiposDePontosDoUsuario("cavaleiro").toArray());
 	}
 
 }
