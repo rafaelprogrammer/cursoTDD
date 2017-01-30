@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Armazenamento {
 
-	private UsuarioRepo usuarioRepo = new UsuarioRepo();
+	private UsuarioRepositorio usuarioRepo = new UsuarioRepositorio();
 
 	public void salvar(String usuario, String tipo, int pontos) {
 		usuarioRepo.salvar(new Usuario(usuario, tipo, pontos));

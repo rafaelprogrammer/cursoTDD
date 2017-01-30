@@ -1,0 +1,7 @@
+usuario: estranho,tipo: estrela,pontos: 10
+usuario: selva,tipo: comentario,pontos: 5
+usuario: agoravai,tipo: curtida,pontos: 0
+usuario: guerra,tipo: estrela,pontos: 10
+usuario: cavaleiro,tipo: estrela,pontos: 10
+usuario: cavaleiro,tipo: comentario,pontos: 5
+usuario: cavaleiro,tipo: curtida,pontos: 60
