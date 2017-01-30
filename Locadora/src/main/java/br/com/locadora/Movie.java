@@ -1,6 +1,6 @@
 package br.com.locadora;
 
-public class Movie {
+public abstract class Movie {
 	
 	public static final int CHILDRENS = 2;
 
@@ -9,23 +9,31 @@ public class Movie {
 	public static final int NEW_RELEASE = 1;
 
 	private String _title;
+	
+	public abstract double getAmount(int daysRented);
 
-	private int _priceCode;
+	public abstract int getFrequentRenterPoints(int daysRented);
 
-	public Movie(String title, int priceCode) {
+	public static Movie createMovie(String title, int priceCode) {
+		if(priceCode == REGULAR)
+			return new Regular(title);
+		
+		if(priceCode == NEW_RELEASE)
+			return new NewRelease(title);
+		
+		if(priceCode == CHILDRENS)
+			return new Childrens(title);
+		
+		throw new RuntimeException("Não existe este tipo de filme");
+	}
+	
+	
+	public Movie(String title) {
 		_title = title;
-		_priceCode = priceCode;
 	}
 
-	public int getPriceCode() {
-		return _priceCode;
-	}
-
-	public void setPriceCode(int arg) {
-		_priceCode = arg;
-	}
 
 	public String getTitle() {
 		return _title;
-	};
+	}
 }
