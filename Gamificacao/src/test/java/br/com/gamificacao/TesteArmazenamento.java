@@ -6,14 +6,10 @@ import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Test;
 
+import br.com.gamificacao.servico.Armazenamento;
+import br.com.gamificacao.servico.IArmazenamento;
+
 public class TesteArmazenamento {
-
-	// A classe Armazenamento deve ser capaz de realizar as seguintes operações:
-
-	// Armazenar que um usuário recebeu uma quantidade de um tipo de ponto. Por exemplo: o usuário "guerra" recebeu "10" pontos do tipo "estrela"
-	// Recuperar quantos pontos de um tipo tem um usuário. Por exemplo: retornar quantos pontos do tipo "estrela" tem o usuário "guerra"
-	// Retornar todos os usuários que já receberam algum tipo de ponto.
-	// Retornar todos os tipos de ponto que já foram registrados para algum usuário.
 
 	@Test
 	public void armazenarUsuario() {
@@ -39,7 +35,7 @@ public class TesteArmazenamento {
 		armazenamento.salvar("cavaleiro", "curtida", 60);
 		assertNotNull(armazenamento.recuperarTodosTiposDePontosDoUsuario("cavaleiro"));
 		assertEquals(3,armazenamento.recuperarTodosTiposDePontosDoUsuario("cavaleiro").size());
-		assertArrayEquals(new Object[] { "estrela", "comentario", "curtida" },
+		assertArrayEquals(new Object[] { "curtida", "comentario", "estrela" },
 				armazenamento.recuperarTodosTiposDePontosDoUsuario("cavaleiro").toArray());
 	}
 	

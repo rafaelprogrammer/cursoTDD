@@ -1,10 +1,14 @@
-package br.com.gamificacao;
+package br.com.gamificacao.model;
 
 public class Usuario {
 	
 	private String usuario;
 	private String tipo;
-	private Integer pontos;
+	private Integer pontos = 0;
+	
+	public Usuario(){
+		
+	}
 	
 	public Usuario(String usuario, String tipo, Integer pontos) {
 		super();

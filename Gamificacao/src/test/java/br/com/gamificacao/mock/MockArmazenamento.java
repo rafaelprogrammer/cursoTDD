@@ -1,4 +1,4 @@
-package br.com.gamificacao;
+package br.com.gamificacao.mock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import br.com.gamificacao.model.Usuario;
+import br.com.gamificacao.servico.IArmazenamento;
 
 public class MockArmazenamento implements IArmazenamento {
 

@@ -7,28 +7,10 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
+import br.com.gamificacao.mock.MockArmazenamento;
+import br.com.gamificacao.servico.Placar;
+
 public class TestePlacar {
-
-	// A classe Placar deve ter métodos que executam as seguintes operações:
-
-	// Registrar um tipo de ponto para um usuário. Por exemplo: o usuário
-	// "guerra" recebeu "10" pontos do tipo "estrela"
-
-	// Retornar todos os pontos de um usuário. Por exemplo: ao pedir os pontos
-	// do usuário "guerra" ele me retornaria que possui "20" pontos do tipo
-	// "moeda"
-	// e "25" pontos do tipo "estrela". Um tipo de ponto que o usuário não
-	// possuir, não deve ser retornado com valor "0". Por exemplo: se o usuário
-	// "guerra"
-	// não possui pontos do tipo "energia", esses não devem ser incluídos na
-	// resposta.
-
-	// Retornar ranking de um tipo de ponto, com a lista de usuário que possuem
-	// aquele ponto ordenados do que possui mais para o que possui menos.
-	// Por exemplo: ao pedir o ranking de "estrela", seria retornado "guerra"
-	// com "25", "fernandes" com "19" e "rodrigo" com "17". Um usuário que não
-	// possui pontos daquele tipo não seria incluído no ranking. Por exemplo, o
-	// usuário "toco" sem pontos do tipo "estrela" não seria incluído.
 
 	@Test
 	public void registrarTipoPontoUsuario() {
@@ -80,7 +62,6 @@ public class TestePlacar {
 		((MockArmazenamento)placar.getArmazenamento()).verificarRegistroSalvo("bruce", "curtida", 1000);
 		((MockArmazenamento)placar.getArmazenamento()).verificarRegistroSalvo("programmer", "curtida", 0);
 		((MockArmazenamento)placar.getArmazenamento()).verificarRecuperaRankingTipoPonto("[bruce,curtida,1000, selva,curtida,150, guerra,curtida,10]", "curtida");
-		
 	}
 
 }

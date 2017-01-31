@@ -1,6 +1,9 @@
-package br.com.gamificacao;
+package br.com.gamificacao.servico;
 
 import java.util.List;
+
+import br.com.gamificacao.model.Usuario;
+import br.com.gamificacao.repo.UsuarioRepositorio;
 
 public class Armazenamento implements IArmazenamento {
 
@@ -45,7 +48,6 @@ public class Armazenamento implements IArmazenamento {
 
 	@Override
 	public List<Usuario> recuperarRankingTipoPonto(String tipo) {
-		// TODO Auto-generated method stub
-		return null;
+		return usuarioRepo.recuperarRankingTipoPonto(tipo);
 	}
 }
