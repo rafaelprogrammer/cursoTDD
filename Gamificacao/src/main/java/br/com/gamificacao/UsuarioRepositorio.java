@@ -14,37 +14,48 @@ public class UsuarioRepositorio {
 	private static final String CAMINHO_ARQUIVO = "registro.txt";
 
 	public void salvar(Usuario usuario) {
-		StringBuilder novoUsuario = criarStringUsuario(usuario);
-		if(isNovaLinha(novoUsuario.toString())){
-			String textoArquivo = recuperarTextoArquivo();
-			criarNovaLinha(getPath(), textoArquivo+=novoUsuario.toString());
+		if (isNovaLinha(usuario)) {
+			criarNovaLinha(getPath(), criarStringUsuario(usuario).toString());
 		}
 	}
 
 	public Integer recuperarPontosUsuarioPorTipo(Usuario usuario) {
 		try {
-			Optional<String> result = Files.readAllLines(getPath()).stream()
-					.filter(f -> f.contains(usuario.getUsuario()) && f.contains(usuario.getTipo())).findFirst();
+			Optional<String> result = Files.readAllLines(getPath()).stream().filter(
+					f -> f.contains(usuario.getUsuario()) && f.contains(usuario.getTipo()) && !f.contentEquals("0"))
+					.findFirst();
 			return converterUsuario(result.get()).getPontos();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	public List<String> recuperarTodosTiposDePontosDoUsuario(Usuario usuario) {
 		try {
-			return Files.readAllLines(getPath()).stream().filter(f -> f.contains(usuario.getUsuario())).map(m->converterUsuario(m).getTipo()).collect(Collectors.toList());
+			return Files.readAllLines(getPath()).stream().filter(f -> f.contains(usuario.getUsuario()) && !f.contentEquals("0"))
+					.map(m -> converterUsuario(m).getTipo()).collect(Collectors.toList());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return Collections.emptyList();
 	}
-	
+
 	public List<Usuario> recuperarTodosUsuariosComPontos() {
 		try {
-			return Files.readAllLines(getPath()).stream().filter(f -> converterUsuario(f).getPontos() > 0).map(m->converterUsuario(m)).collect(Collectors.toList());
+			return Files.readAllLines(getPath()).stream().filter(f -> converterUsuario(f).getPontos() > 0)
+					.map(m -> converterUsuario(m)).collect(Collectors.toList());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}
+
+	public List<Usuario> recuperarTodosPontosUsuario(String usuario) {
+		try {
+			return Files.readAllLines(getPath()).stream().filter(f -> f.contains(usuario))
+					.map(m -> converterUsuario(m)).collect(Collectors.toList());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,7 +70,7 @@ public class UsuarioRepositorio {
 		}
 		return null;
 	}
-	
+
 	private Usuario converterUsuario(String txtUsuario) {
 		String[] str = txtUsuario.split(",");
 		String usuario = str[0].replace("usuario:", "").trim();
@@ -79,6 +90,7 @@ public class UsuarioRepositorio {
 		strUsuario.append("pontos: ");
 		strUsuario.append(usuario.getPontos());
 		strUsuario.append("\n");
+		strUsuario.append(recuperarTextoArquivo());
 		return strUsuario;
 	}
 
@@ -88,16 +100,15 @@ public class UsuarioRepositorio {
 
 	private void criarNovaLinha(Path p, String novaLinha) {
 		try {
-			if(isNovaLinha(novaLinha)){
-				Files.write(p, novaLinha.getBytes());
-			}
+			Files.write(p, novaLinha.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private boolean isNovaLinha(String novaLinha) {
-		return !recuperarTextoArquivo().contains(novaLinha);
+	private boolean isNovaLinha(Usuario usuario) {
+		String txtArquivo = recuperarTextoArquivo();
+		return !txtArquivo.contains(usuario.getUsuario()) && !txtArquivo.contains(usuario.getTipo());
 	}
 
 }

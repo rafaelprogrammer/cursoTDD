@@ -1,3 +1,4 @@
+usuario: cobra,tipo: moeda,pontos: 5
 usuario: estranho,tipo: estrela,pontos: 10
 usuario: selva,tipo: comentario,pontos: 5
 usuario: agoravai,tipo: curtida,pontos: 0
